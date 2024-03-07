@@ -5,11 +5,9 @@
 using namespace std;
 
 int main () {
-  string buffer = "Barco, limao.";
-  bool is_normal_mode = false;
+  Keyboard k;
 
-  read_buffer(buffer, is_normal_mode);
-  cout << buffer << ' ' << is_normal_mode << endl;
+  k.read_buffer();
 
   return 0;
 }

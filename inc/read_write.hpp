@@ -5,8 +5,27 @@
 #include <unistd.h>
 #include <linux/input.h>
 
-#include <string>
+#include <vector>
+#include <iostream>
 
-void read_buffer(std::string& buffer, bool& is_normal_mode);
+class Keyboard {
+public:
+  Keyboard();
+  ~Keyboard();
+  bool get_is_command_mode();
+
+  void read_buffer();
+  void write_buffer();
+
+private:
+  int file_descriptor;
+  struct input_event event;
+  std::vector<int> raw_buffer;
+
+  bool is_command_mode;
+  int number_attempts;
+
+  void init_file_descriptor();
+};
 
 #endif // !_READ_WRITE_HPP
