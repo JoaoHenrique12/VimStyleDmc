@@ -26,6 +26,7 @@ private:
   int number_attempts;
 
   void init_file_descriptor();
+  void write_key(int key_code, bool is_pressed_key);
 };
 
 #endif // !_READ_WRITE_HPP

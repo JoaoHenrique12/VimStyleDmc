@@ -30,7 +30,7 @@ void Keyboard::read_buffer()
 {
   raw_buffer.clear();
   while (true) {
-   for (int i = 0; i < number_attempts && read(file_descriptor, &event, sizeof(struct input_event); i++) < 0) {
+   for (int i = 0; i < number_attempts && read(file_descriptor, &event, sizeof(struct input_event)) < 0; i++) {
       std::cout << "Error reading input.\n";
     }
 
@@ -40,4 +40,34 @@ void Keyboard::read_buffer()
     }
     if (event.type == EV_KEY && event.code == KEY_ENTER) break;
   }
+}
+
+void Keyboard::write_key(int keycode, bool is_pressed_key)
+{
+  event.type = EV_KEY;
+  event.code = keycode;
+  event.value = is_pressed_key;
+  gettimeofday(&event.time, NULL);
+
+  write(file_descriptor, &event, sizeof(struct input_event));
+
+  // Send a synchronization event
+  event.type = EV_SYN;
+  event.code = SYN_REPORT;
+  event.value = 0;
+  gettimeofday(&event.time, NULL);
+  write(file_descriptor, &event, sizeof(struct input_event));
+}
+
+void Keyboard::write_buffer()
+{
+  for(auto key : raw_buffer) {
+    write_key(key, true);
+    usleep(100000);
+    write_key(key, false);
+  }
+
+  write_key(KEY_ENTER, true);
+  usleep(100000);
+  write_key(KEY_ENTER, false);
 }
