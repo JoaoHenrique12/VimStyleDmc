@@ -12,7 +12,6 @@ class Keyboard {
 public:
   Keyboard();
   ~Keyboard();
-  bool get_is_command_mode();
 
   void read_buffer();
   void write_buffer();

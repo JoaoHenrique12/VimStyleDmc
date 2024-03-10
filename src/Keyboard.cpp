@@ -14,10 +14,6 @@ Keyboard::~Keyboard(){
     close(file_descriptor);
 }
 
-bool Keyboard::get_is_command_mode(){
-  return is_command_mode;
-}
-
 void Keyboard::init_file_descriptor()
 {
   for (int i = 0; i < number_attempts && file_descriptor == -1; i++) {
