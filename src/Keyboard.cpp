@@ -3,9 +3,9 @@
 Keyboard::Keyboard()
 {
   file_descriptor = -1;
-  is_command_mode = false;
 
   number_attempts = 5;
+  time_between_attempts_us = 500 * 1000;
 
   init_file_descriptor();
 }
@@ -19,6 +19,7 @@ void Keyboard::init_file_descriptor()
   for (int i = 0; i < number_attempts && file_descriptor == -1; i++) {
     file_descriptor = open("/dev/input/by-path/platform-i8042-serio-0-event-kbd", O_RDWR );
     std::cout << "Try Open File Descriptor. " << i + 1 << '\n';
+    usleep(time_between_attempts_us);
   }
 }
 
@@ -28,6 +29,7 @@ void Keyboard::read_buffer()
   while (true) {
    for (int i = 0; i < number_attempts && read(file_descriptor, &event, sizeof(struct input_event)) < 0; i++) {
       std::cout << "Error reading input.\n";
+      usleep(time_between_attempts_us);
     }
 
     if (event.type == EV_KEY && event.value == 1) {

@@ -21,8 +21,8 @@ private:
   struct input_event event;
   std::vector<int> raw_buffer;
 
-  bool is_command_mode;
   int number_attempts;
+  int time_between_attempts_us;
 
   void init_file_descriptor();
   void write_key(int key_code, bool is_pressed_key);
