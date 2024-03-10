@@ -1,5 +1,5 @@
-#ifndef _READ_WRITE_HPP
-#define _READ_WRITE_HPP
+#ifndef _KEYBOARD_HPP
+#define _KEYBOARD_HPP
 
 #include <fcntl.h>
 #include <unistd.h>
@@ -29,4 +29,4 @@ private:
   void write_key(int key_code, bool is_pressed_key);
 };
 
-#endif // !_READ_WRITE_HPP
+#endif
